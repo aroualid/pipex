@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 11:55:20 by aroualid         ###   ########.fr       */
+/*   Created: 2023/11/06 15:53:38 by aroualid          #+#    #+#             */
+/*   Updated: 2024/03/21 13:59:19 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int ac, char **av, char **env)
-{
-	if (ac != 5)
-		return (0);
+#include "pipex.h"
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }

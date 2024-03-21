@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 11:55:20 by aroualid         ###   ########.fr       */
+/*   Created: 2024/03/12 00:32:00 by aroualid          #+#    #+#             */
+/*   Updated: 2024/03/21 13:58:14 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int ac, char **av, char **env)
-{
-	if (ac != 5)
-		return (0);
+#include "pipex.h"
 
+int	ft_strncmp( const char *first, const char *second, size_t length)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (length == 0)
+		return (0);
+	while (first[i] == second[i] && i < length - 1 && first[i])
+	{
+		i++;
+	}
+	return (((unsigned char *)first)[i] - ((unsigned char *)second)[i]);
 }

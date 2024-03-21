@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 11:55:20 by aroualid         ###   ########.fr       */
+/*   Created: 2023/11/08 11:06:21 by aroualid          #+#    #+#             */
+/*   Updated: 2024/03/21 13:54:56 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int ac, char **av, char **env)
-{
-	if (ac != 5)
-		return (0);
+#include "pipex.h"
 
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*p;
+
+	p = s;
+	while (n > 0)
+	{
+		*(p++) = 0;
+		n--;
+	}
 }
