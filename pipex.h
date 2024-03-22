@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 19:08:13 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:18:41 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
@@ -28,5 +31,5 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*find_path(char **env, char *av);
 char	**find_cmd(char *av);
-int	apply_exec(char *path, char **cmd, char **env);
+int		apply_exec(char *path, char **cmd, char **env);
 #endif

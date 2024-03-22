@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 19:07:22 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:16:28 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*find_path(char **env, char *av)
 	while (ft_strlen(env[i]) <= 4 || ft_strncmp(env[i], "PATH", 4) != 0)
 		i++;
 	folders = ft_split(env[i], ':');
-	endfile = ft_strjoin("/", av);
+	endfile = ft_strjoin("/", *find_cmd(av));
 	while (folders[j])
 	{
 		path = ft_strjoin(folders[j], endfile);
@@ -44,7 +44,6 @@ char	**find_cmd(char *av)
 {
 	char **cmd;
 
-	cmd = NULL;
 	cmd = ft_split(av, ' ');
 	if (cmd)
 		return cmd;
