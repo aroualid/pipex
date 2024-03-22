@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/22 18:15:12 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:21:49 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main(int ac, char **av, char **env)
 			dup2(infile,  STDIN_FILENO);
 			dup2(fd[1], STDOUT_FILENO);
 			close (infile);
+			close (outfile);
 			close (fd[0]);
 			close (fd[1]);
 			apply_exec(path2, cmd2, env);
@@ -58,7 +59,10 @@ int main(int ac, char **av, char **env)
 			close (fd[1]);
 			apply_exec(path3, cmd3, env);
 		}
-
+		close(infile);
+		close(outfile);
+		close (fd[1]);
+		close (fd[0]);
 		wait(NULL);
 	}
 }
