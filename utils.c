@@ -6,8 +6,24 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:55 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 11:54:57 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:59:46 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
 
+void	ft_free(char **tav)
+{
+	int	i;
+
+	i = 0;
+	if (tav != NULL)
+	{
+		while (tav[i] != NULL)
+		{
+			free(tav[i]);
+			i++;
+		}
+		free(tav);
+	}
+}

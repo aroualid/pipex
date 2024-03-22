@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:36:31 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:34 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:59:19 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*ft_copy_word(const char *str, char sep, int *length)
 	return (ptr);
 }
 
-static void	*ft_free(char **tav)
+static void	*ftt_free(char **tav)
 {
 	int	i;
 
@@ -97,7 +97,7 @@ char	**ft_split(char const *s, char c)
 		{
 			tab[i] = ft_copy_word(s, c, &length);
 			if (tab[i] == NULL)
-				return (ft_free(tab));
+				return (ftt_free(tab));
 			i++;
 		}
 		if (*s == c)

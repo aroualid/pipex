@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/22 18:21:49 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:06:13 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int main(int ac, char **av, char **env)
 		id2 = fork();
 		if (id2 == 0)
 		{
-			printf("TEST");
 			dup2(fd[0], STDIN_FILENO);
 			dup2(outfile, STDOUT_FILENO);
 			close (infile);
