@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/22 19:06:13 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/24 03:01:03 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,15 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	int id;
-	int id2;
+	int	id;
+	int	id2;
 
 	id = 0;
 	id2 = 0;
-	int fd[2];
-	int infile;
-	int outfile;
 	if (ac != 5)
 		return (0);
 	else
-	{
-		infile = open(av[1], O_RDONLY);
-		outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		char *path2 = find_path(env, av[2]);
-		char **cmd2 = find_cmd(av[2]);
-		char *path3 = find_path(env, av[3]);
-		char **cmd3 = find_cmd(av[3]);
-		if (pipe(fd) == -1)
-			printf ("ERROR");
-		id = fork ();
-		if (id == 0)
-		{
-			dup2(infile,  STDIN_FILENO);
-			dup2(fd[1], STDOUT_FILENO);
-			close (infile);
-			close (outfile);
-			close (fd[0]);
-			close (fd[1]);
-			apply_exec(path2, cmd2, env);
-		}
-		id2 = fork();
-		if (id2 == 0)
-		{
-			dup2(fd[0], STDIN_FILENO);
-			dup2(outfile, STDOUT_FILENO);
-			close (infile);
-			close (outfile);
-			close (fd[0]);
-			close (fd[1]);
-			apply_exec(path3, cmd3, env);
-		}
-		close(infile);
-		close(outfile);
-		close (fd[1]);
-		close (fd[0]);
-		wait(NULL);
-	}
+		apply_func(id, id2, av, env);
 }

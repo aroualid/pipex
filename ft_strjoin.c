@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 18:01:47 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:34 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:45:08 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	t2 = ft_strlen(s2);
 	ptr = ft_calloc(t1 + t2 + 1, 1);
 	if (!ptr)
-		return (NULL);
+		return (free (ptr), NULL);
 	while (i < (t1 + t2))
 	{
 		while (i < t1)

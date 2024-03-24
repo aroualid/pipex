@@ -6,13 +6,13 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:36:31 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/22 18:59:19 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/23 20:30:21 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static size_t ft_count_word(char const *s, char c)
+static size_t	ft_count_word(char const *s, char c)
 {
 	size_t	i;
 	size_t	count;
