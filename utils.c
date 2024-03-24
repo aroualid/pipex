@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:55 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/24 03:52:27 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:36:55 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,6 @@ void	apply_func(int id, int id2, char *av[], char **env)
 	close (fd[1]);
 	free_pipe_fd(fd, av, env);
 	wait(NULL);
+	close (4);
+	close (3);
 }
