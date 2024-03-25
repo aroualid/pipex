@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:55 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/24 22:39:23 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:29:07 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,8 @@ void	free_pipe_fd(int fd[2], char *av[], char **env)
 	int		i;
 	char	*path;
 	char	**cmd;
-	int		infile;
-	int		outfile;
 
-	infile = open(av[1], O_RDONLY);
-	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	i = 2;
-	close (infile);
-	close (outfile);
 	close (fd[0]);
 	close (fd[1]);
 	while (i <= 3)
@@ -55,12 +49,8 @@ void	free_pipe_fd(int fd[2], char *av[], char **env)
 
 void	apply_func(int id, int id2, char *av[], char **env)
 {
-	int	infile;
-	int	outfile;
 	int	fd[2];
 
-	infile = open(av[1], O_RDONLY);
-	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipe(fd) == -1)
 		free_pipe_fd(fd, av, env);
 	id = fork ();
@@ -69,10 +59,7 @@ void	apply_func(int id, int id2, char *av[], char **env)
 	id2 = fork();
 	if (id2 == 0)
 		apply_exec3(av, fd, env);
-	close (infile);
-	close (outfile);
+	wait(NULL);
 	close (fd[0]);
 	close (fd[1]);
-	free_pipe_fd(fd, av, env);
-	wait(NULL);
 }
