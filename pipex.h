@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/25 16:52:28 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:51:54 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,4 @@ int			apply_exec3(char *av[], int fd[2], char **env);
 void		ft_free(char **tav);
 void		free_pipe_fd(int fd[2], char *av[], char **env);
 void		apply_func(int id, int id2, char *av[], char **env);
-void		apply_bonus(int i, int ac, char *av[], char **env);
-int			apply_exec(char *av[], int i, int ac, char **env);
 #endif

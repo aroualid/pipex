@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/03/22 16:37:37 by aroualid         ###   ########.fr        #
+#    Updated: 2024/03/29 15:31:12 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,14 @@ CFLAGS=  -Wall -Wextra -Werror  -g3
 SRCS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
 	   ft_bzero.c ft_split.c ft_strlen.c main.c
 
+BNS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
+	   ft_bzero.c ft_split.c ft_strlen.c exec_bonus.c
 OBJS = $(SRCS:%.c=%.o)
+OBJS_BNS = $(BNS:%.c=%.o)
 NAME = pipex
+NAME_BONUS = pipex_bonus
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re bonus
 
 all:  $(NAME) 
 #	@echo "$(LIGHT_CYAN)Starting tasks..."
@@ -55,3 +59,5 @@ fclean: clean
 
 re: fclean all
 
+bonus: $(OBJS_BNS)
+	$(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BNS)
