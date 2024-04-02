@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:34:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/29 17:41:25 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:02:12 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int apply_exec(char *av, int pipe[2], char **env)
 	char	*path;
 	char	**cmd;
 	int		pid;
-
+	
+	wait (NULL);
 	pid = fork();
 	if (pid == -1)
 		printf("PID ERROR 1");
@@ -51,6 +52,8 @@ int	apply_exec_first(char *av[], int fd[2], char **env)
 	if (pid == 0)
 	{
 		infile = open(av[1], O_RDONLY);
+		if (infile == -1)
+			printf("ERROR INFILE");
 		path = find_path(env, av[2]);
 		cmd = find_cmd(av[2]);
 		if (dup2(infile,  STDIN_FILENO) == -1)
@@ -73,6 +76,7 @@ int	apply_exec_end(char *av[], int fd[2], char **env, int ac)
 	int		outfile;
 	int		pid;
 
+	wait (NULL);
 	pid = fork();
 	if (pid == -1)
 		printf("PID ERROR 3");
@@ -101,29 +105,33 @@ int	main(int ac, char **av, char **env)
 	int	i;
 	int fd[2];
 	
-	i = 1;
+	i = 2;
 	if(pipe(fd) == -1)
 		printf("PIPEERROR");
-	while (i < ac - 2)
+	while (i < ac - 1)
 	{
-
-		if (i == 1)
+		if (i == 2)
 		{
-			printf("2");
+			printf("1");
+			printf(" %s\n", av[i]);
 			apply_exec_first(av, fd, env);
 		}
 		else if (i == ac - 2)
 		{
 			printf("3");
+			printf(" %s\n", av[i]);
 			apply_exec_end(av, fd, env, ac);
 		}
 		else
 		{
-			printf("1");
+			printf("2");
+			printf(" %s\n", av[i]);
 			apply_exec(av[i], fd, env);
 		}
+
 		i++;
 	}
-
+	while (wait(NULL))
+		;
 
 }

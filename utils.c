@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:55 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/25 15:29:07 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:48:33 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	apply_func(int id, int id2, char *av[], char **env)
 	id = fork ();
 	if (id == 0)
 		apply_exec2(av, fd, env);
+	wait(NULL);
 	id2 = fork();
 	if (id2 == 0)
 		apply_exec3(av, fd, env);

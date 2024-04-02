@@ -1,2 +1,6 @@
-ft_calloc.c
-ft_calloc.o
+CFLAGS=  -Wall -Wextra -Werror  -g3
+SRCS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
+BNS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
+.PHONY: all clean fclean re bonus
+all:  $(NAME) 
+re: fclean all
