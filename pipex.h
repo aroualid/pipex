@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/29 14:51:54 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:38:59 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlen(const char *s);
 char		*find_path(char **env, char *av);
 char		**find_cmd(char *av);
-int			apply_exec2(char *av[], int fd[2], char **env);
-int			apply_exec3(char *av[], int fd[2], char **env);
+int			exec_first(char *av, char **env, char *file);
+void		exec_last(char *av, char **env, char *file, int fd);
 void		ft_free(char **tav);
-void		free_pipe_fd(int fd[2], char *av[], char **env);
-void		apply_func(int id, int id2, char *av[], char **env);
+
 #endif

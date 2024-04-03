@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/03/29 15:31:12 by aroualid         ###   ########.fr        #
+#    Updated: 2024/04/03 17:39:07 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,8 @@ LIGHT_PURPLE=\033[1;35m
 
 CC = cc
 CFLAGS=  -Wall -Wextra -Werror  -g3
-SRCS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
-	   ft_bzero.c ft_split.c ft_strlen.c main.c
-
+SRCS = exec_bonus.c ft_calloc.c ft_strjoin.c ft_strncmp.c pars.c \
+	   ft_bzero.c ft_split.c ft_strlen.c utils.c
 BNS = exec.c ft_calloc.c ft_strjoin.c ft_strncmp.c utils.c \
 	   ft_bzero.c ft_split.c ft_strlen.c exec_bonus.c
 OBJS = $(SRCS:%.c=%.o)

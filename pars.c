@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/03/25 15:31:31 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:52:58 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,37 +57,4 @@ char	**find_cmd(char *av)
 	return (ft_free(cmd), NULL);	
 }
 
-int	apply_exec2(char *av[], int fd[2], char **env)
-{
-	char	*path;
-	char	**cmd;
-	int		infile;
-	
-	infile = open(av[1], O_RDONLY);
-	path = find_path(env, av[2]);
-	cmd = find_cmd(av[2]);
-	dup2(infile,  STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close (infile);
-	close (fd[0]);
-	close (fd[1]);
-	return(execve(path, cmd, env));
-}
 
-
-int	apply_exec3(char *av[], int fd[2], char **env)
-{	
-	char	*path;
-	char	**cmd;
-	int		outfile;
-
-	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	path = find_path(env, av[3]);
-	cmd = find_cmd(av[3]);
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
-	close (outfile);
-	close (fd[0]);
-	close (fd[1]);
-	return(execve(path, cmd, env));
-}
