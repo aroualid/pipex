@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/12 13:57:30 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:27:04 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*find_path_in_folders(char **folders, char *av)
 	{
 		path = ft_strjoin(folders[j], endfile);
 		if (access(path, F_OK | X_OK) == 0)
-			return_path (cmd, endfile, path);
+			return (return_path (cmd, endfile, path));
 		free(path);
 		j++;
 	}
