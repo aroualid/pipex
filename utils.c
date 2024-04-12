@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:38:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/10 13:32:16 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:19:56 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ void	ft_close(int pip[2], int infile)
 	close (pip[1]);
 	close (pip[0]);
 	close (infile);
+}
+
+char	*return_path(char **cmd, char *endfile, char *path)
+{
+	ft_free(cmd);
+	free(endfile);
+	return (path);
 }

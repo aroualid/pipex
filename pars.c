@@ -6,13 +6,13 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/11 14:51:14 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:57:30 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_path(char **env, char *av)
+/*char	*find_path(char **env, char *av)
 {
 	char	**folders;
 	char	*path;
@@ -49,42 +49,52 @@ char	*find_path(char **env, char *av)
 		}
 	}
 	return (free(endfile), ft_free(folders), ft_free(cmd), write (1, "command not found : ", 21), write(1, av, ft_strlen(av)), write (1, "\n", 1), NULL);
-}
+}*/
 
-/*char	**get_path_folders(char **env)
+char	**get_folders_from_path(char **env)
 {
 	int		i;
+	char	**folders;
 
 	i = 0;
-	while (ft_strlen(env[i]) <= 4 || ft_strncmp(env[i], "PATH", 4) != 0)
+	folders = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH", 4) == 0)
+		{
+			folders = ft_split(env[i] + 5, ':');
+			break ;
+		}
 		i++;
-	if (env[i] == NULL)
-		return NULL;
-	return ft_split(env[i], ':');
+	}
+	return (folders);
 }
 
-char	*get_command_path(char **folders, char *av)
+char	*find_path_in_folders(char **folders, char *av)
 {
+	char	*path;
 	char	*endfile;
 	char	**cmd;
 	int		j;
-	char	*path;
 
-	j = 0;
+	path = NULL;
+	endfile = NULL;
 	cmd = find_cmd(av);
+	j = 0;
+	if (cmd == NULL)
+		return (NULL);
 	endfile = ft_strjoin("/", *cmd);
 	while (folders[j])
 	{
 		path = ft_strjoin(folders[j], endfile);
 		if (access(path, F_OK | X_OK) == 0)
-			return path;
-		else
-		{
-			free(path);
-			j++;
-		}
+			return_path (cmd, endfile, path);
+		free(path);
+		j++;
 	}
-	return NULL;
+	ft_free(cmd);
+	free(endfile);
+	return (NULL);
 }
 
 char	*find_path(char **env, char *av)
@@ -92,29 +102,34 @@ char	*find_path(char **env, char *av)
 	char	**folders;
 	char	*path;
 
-	folders = get_path_folders(env);
+	folders = get_folders_from_path(env);
 	if (folders == NULL)
-		return (write(1, "command not found : ", 21), 
-			write(1, av, ft_strlen(av)), NULL);
-	path = get_command_path(folders, av);
+	{
+		write(1, "PATH environment variable not found\n", 36);
+		return (NULL);
+	}
+	path = find_path_in_folders(folders, av);
 	ft_free(folders);
 	if (path == NULL)
-		return (write(1, "command not found : ", 21), 
-			write(1, av, ft_strlen(av)), NULL);
-	return path;
-}*/
+	{
+		write(1, "command not found : ", 21);
+		write(1, av, ft_strlen(av));
+		write(1, "\n", 1);
+	}
+	return (path);
+}
 
 char	**find_cmd(char *av)
 {
-	char **cmd;
+	char	**cmd;
 
 	if (av != NULL)
 	{	
 		cmd = ft_split(av, ' ');
-			if (cmd)
-				return (cmd);
-			else 
-				return (ft_free(cmd), NULL);	
+		if (cmd)
+			return (cmd);
+		else
+			return (ft_free(cmd), NULL);
 	}
 	return (NULL);
 }

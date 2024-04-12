@@ -1,6 +1,3 @@
-\
-exec_bonus.c
-exec_bonus.o
 exec.c
 exec.o
 ft_bzero.c
@@ -19,7 +16,6 @@ makefile
 pars.c
 pars.o
 pipex
-pipex_bonus
 pipex.h
 test
 test2
