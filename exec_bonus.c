@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:09:47 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 17:38:23 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:00:03 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	exec_first(char *av, char **env, char *file)
 {
+	int		id;
+	int		pip[2];
 	char	*path;
 	char	**cmd;
 	int		infile;
-	int		id;
-	int		pip[2];
-
 
 	if (pipe(pip) == -1)
 		perror("");
@@ -28,20 +27,25 @@ int	exec_first(char *av, char **env, char *file)
 		perror("");
 	if (id == 0)
 	{
-		infile = open(file, O_RDONLY);
-		if (check_infile(file) == 0)
+		infile = check_infile(file);
+		if (infile == -1)
 		{
 			close(pip[1]);
 			close(pip[0]);
 			exit (-1);
-		}	
+		}
+		close(infile);
 		path = find_path(env, av);
 		cmd = find_cmd(av);
-		apply_exec_first_bonus(infile, pip);
-		apply_exec_first_bonus_2(path, cmd, env);
+		if (path != NULL && cmd != NULL)
+			apply_exec_first_bns(av, env, file, pip);
+		ft_free(cmd);
+		free(path);
+		close(pip[1]);
+		close(pip[0]);
+		exit (-1);
 	}
-	close(pip[1]);
-	return (pip[0]);
+	return (close(pip[1]), pip[0]);
 }
 
 int	exec_midle(char *av, char **env, int fd)
@@ -72,27 +76,28 @@ int	exec_midle(char *av, char **env, int fd)
 
 void	exec_last(char *av, char **env, char *file, int fd)
 {
+	int		id;
 	char	*path;
 	char	**cmd;
-	int		outfile;
-	int		id;
 
 	id = fork();
 	if (id == -1)
-		perror("");
-	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (outfile == -1)
 		perror("");
 	if (id == 0)
 	{
 		path = find_path(env, av);
 		cmd = find_cmd(av);
-		apply_exec_last_bonus(fd, outfile);
-		if (execve(path, cmd, env) == -1)
-			perror("");
+		if (path != NULL && cmd != NULL)
+			apply_exec_last_bns(av, env, file, fd);
+		else
+		{
+			ft_free(cmd);
+			free(path);
+			close (fd);
+			exit (-1);
+		}
 	}
-	close(outfile);
-	close(fd);
+	close (fd);
 }
 
 int	main(int ac, char **av, char **env)

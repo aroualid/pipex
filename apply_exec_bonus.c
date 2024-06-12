@@ -6,28 +6,39 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:51:02 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 17:27:26 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:59:44 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	apply_exec_first_bonus(int infile, int pip[2])
+void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2])
 {
+	char	*path;
+	char	**cmd;
+	int		infile;
+	
+	infile = open(file, O_RDONLY);
+	if (infile == -1)
+		perror("");
+	path = find_path(env, av);
+	cmd = find_cmd(av);
 	if (dup2(infile, STDIN_FILENO) == -1)
 		perror("");
 	if (dup2(pip[1], STDOUT_FILENO) == -1)
 		perror("");
-	close (infile);
-	close (pip[0]);
-	close (pip[1]);
+	ft_close(pip, infile);
+	if (execve(path, cmd, env) == -1)
+	{
+		close (infile);
+		free (path);
+		ft_free (cmd);
+		exit(-1);
+	}
+	free (path);
+	ft_free (cmd);
 }
 
-void	apply_exec_first_bonus_2(char *path, char **cmd, char **env)
-{
-	if (execve(path, cmd, env) == -1)
-		perror("");
-}
 void	apply_exec_middle_bonus(int fd, int pip[2])
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -38,12 +49,29 @@ void	apply_exec_middle_bonus(int fd, int pip[2])
 	close(pip[1]);
 }
 
-void	apply_exec_last_bonus(int fd, int outfile)
+void	apply_exec_last_bns(char *av, char **env, char *file, int fd)
 {
+	char	*path;
+	char	**cmd;
+	int		outfile;
+
+	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (outfile == -1)
+		perror("");
+	path = find_path(env, av);
+	cmd = find_cmd(av);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
-		perror("DUP 2 error 1.2");
+		perror("");
 	close (fd);
 	close (outfile);
+	if (execve(path, cmd, env) == -1)
+	{
+		free (path);
+		ft_free (cmd);
+		exit(-1);
+	}
+	free (path);
+	ft_free (cmd);
 }
