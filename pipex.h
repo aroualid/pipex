@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/12 15:20:06 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:52:57 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,7 @@ void		ft_close(int pip[2], int infile);
 void		apply_exec_first(char *av, char **env, char *file, int pip[2]);
 void		apply_exec_last(char *av, char **env, char *file, int fd);
 char		*return_path(char **cmd, char *endfile, char *path);
+void		apply_exec_first_bonus(int infile, int pip[2]);
+void		apply_exec_middle_bonus(int fd, int pip[2]);
+void		apply_exec_last_bonus(int fd, int outfile);
 #endif

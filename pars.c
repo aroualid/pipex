@@ -6,50 +6,11 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/12 15:27:04 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:00:20 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/*char	*find_path(char **env, char *av)
-{
-	char	**folders;
-	char	*path;
-	char	*endfile;
-	char	**cmd;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	folders = NULL;
-	path = NULL;
-	endfile = NULL;
-	cmd = NULL;
-	while (ft_strlen(env[i]) <= 4 || ft_strncmp(env[i], "PATH", 4) != 0)
-		i++;
-	if (env[i] == NULL)
-		return NULL;
-	folders = ft_split(env[i], ':');
-	cmd = find_cmd(av);
-	if (cmd != NULL)
-	{
-		endfile = ft_strjoin("/", *cmd);
-		while (folders[j])
-		{
-			path = ft_strjoin(folders[j], endfile);
-			if (access(path, F_OK | X_OK) == 0)
-				return (free(endfile), ft_free(folders), ft_free(cmd), path);
-			else
-			{
-				free(path);
-				j++;
-			}
-		}
-	}
-	return (free(endfile), ft_free(folders), ft_free(cmd), write (1, "command not found : ", 21), write(1, av, ft_strlen(av)), write (1, "\n", 1), NULL);
-}*/
 
 char	**get_folders_from_path(char **env)
 {
