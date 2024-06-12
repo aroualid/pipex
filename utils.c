@@ -6,11 +6,27 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:38:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/04/12 15:19:56 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:19:32 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*ptr;
+
+	ptr = (char *)s;
+	while (*ptr != (char) c)
+	{
+		if (*ptr == '\0')
+		{
+			return (NULL);
+		}
+		ptr++;
+	}
+	return (ptr);
+}
 
 void	ft_free(char **tav)
 {

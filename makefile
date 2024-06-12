@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/04/09 09:37:41 by aroualid         ###   ########.fr        #
+#    Updated: 2024/06/12 15:03:34 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ CFLAGS=  -Wall -Wextra -Werror  -g3
 SRCS = ft_calloc.c ft_strjoin.c ft_strncmp.c pars.c \
 	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec.c
 BNS =  ft_calloc.c ft_strjoin.c ft_strncmp.c pars.c \
-	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec_bonus.c
+	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec_bonus.c \
+	   apply_exec_bonus.c
 OBJS = $(SRCS:%.c=%.o)
 OBJS_BNS = $(BNS:%.c=%.o)
 NAME = pipex
@@ -35,17 +36,6 @@ NAME_BONUS = pipex_bonus
 .PHONY: all clean fclean re bonus
 
 all:  $(NAME) 
-#	@echo "$(LIGHT_CYAN)Starting tasks..."
-#	@i=0; while [ $$i -le 100 ]; do \
-#        echo -n "Progress: [$$i%] "; \
-#        printf "$(LIGHT_GREEN)=%.0s" $$(seq 1 $$((i / 2))); \
-#        printf " "; \
-#        printf "$(LIGHT_BLUE)%.0s" $$(seq $$((i / 2 + 1)) 50); \
-#        echo -n "\r"; \
-#        sleep 0.02; \
-#        i=$$((i+1)); \
-#    done
-#	@echo "$(LIGHT_MAGENTA)All tasks completed !                                                                "
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) 

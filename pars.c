@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 14:00:20 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:28:20 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,44 @@ char	*find_path_in_folders(char **folders, char *av)
 	return (NULL);
 }
 
+char	*path_ok(char *av)
+{
+	char	**cmd;
+	char	*path;
+
+	cmd = find_cmd(av);
+	if (cmd == NULL)
+		return (NULL);
+	path = *cmd;
+	if (access(path, F_OK | X_OK) == 0)
+		return(path);
+	return(NULL);
+}
+
 char	*find_path(char **env, char *av)
 {
 	char	**folders;
 	char	*path;
 
-	folders = get_folders_from_path(env);
-	if (folders == NULL)
+	if (path_ok(av) == NULL)
 	{
-		write(1, "PATH environment variable not found\n", 36);
-		return (NULL);
+		folders = get_folders_from_path(env);
+		if (folders == NULL)
+		{
+			write(1, "PATH environment variable not found\n", 36);
+			return (NULL);
+		}
+		path = find_path_in_folders(folders, av);
+		ft_free(folders);
+		if (path == NULL)
+		{
+			write(1, "command not found : ", 21);
+			write(1, av, ft_strlen(av));
+			write(1, "\n", 1);
+		}
+		return (path);
 	}
-	path = find_path_in_folders(folders, av);
-	ft_free(folders);
-	if (path == NULL)
-	{
-		write(1, "command not found : ", 21);
-		write(1, av, ft_strlen(av));
-		write(1, "\n", 1);
-	}
-	return (path);
+	return (path_ok(av));
 }
 
 char	**find_cmd(char *av)
