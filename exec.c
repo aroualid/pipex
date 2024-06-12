@@ -6,11 +6,12 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 09:34:36 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 13:42:00 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:37:16 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
 
 int	exec_first(char *av, char **env, char *file)
 {
@@ -18,6 +19,7 @@ int	exec_first(char *av, char **env, char *file)
 	int		pip[2];
 	char	*path;
 	char	**cmd;
+	int		infile;
 
 	if (pipe(pip) == -1)
 		perror("");
@@ -26,6 +28,14 @@ int	exec_first(char *av, char **env, char *file)
 		perror("");
 	if (id == 0)
 	{
+		infile = check_infile(file);
+		if (infile == -1)
+		{
+			close(pip[1]);
+			close(pip[0]);
+			exit (-1);
+		}
+		close(infile);
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
@@ -44,19 +54,20 @@ void	apply_exec_first(char *av, char **env, char *file, int pip[2])
 	char	*path;
 	char	**cmd;
 	int		infile;
-
+	
 	infile = open(file, O_RDONLY);
 	if (infile == -1)
-		perror("okay okay");
+		perror("");
 	path = find_path(env, av);
 	cmd = find_cmd(av);
 	if (dup2(infile, STDIN_FILENO) == -1)
-		perror("DUP 2 error 1.1");
+		perror("");
 	if (dup2(pip[1], STDOUT_FILENO) == -1)
-		perror("DUP 2 error 1.2");
+		perror("");
 	ft_close(pip, infile);
 	if (execve(path, cmd, env) == -1)
 	{
+		close (infile);
 		free (path);
 		ft_free (cmd);
 		exit(-1);
@@ -73,7 +84,7 @@ void	exec_last(char *av, char **env, char *file, int fd)
 
 	id = fork();
 	if (id == -1)
-		perror("UwU");
+		perror("");
 	if (id == 0)
 	{
 		path = find_path(env, av);
@@ -101,13 +112,13 @@ void	apply_exec_last(char *av, char **env, char *file, int fd)
 
 	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (outfile == -1)
-		perror("okay okay");
+		perror("");
 	path = find_path(env, av);
 	cmd = find_cmd(av);
 	if (dup2(fd, STDIN_FILENO) == -1)
-		perror("DUP 2 error 1.1");
+		perror("");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
-		perror("DUP 2 error 1.2");
+		perror("");
 	close (fd);
 	close (outfile);
 	if (execve(path, cmd, env) == -1)

@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 15:31:12 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:24:02 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,6 @@ void		apply_exec_first_bonus(int infile, int pip[2]);
 void		apply_exec_middle_bonus(int fd, int pip[2]);
 void		apply_exec_last_bonus(int fd, int outfile);
 char		*ft_strchr(const char *s, int c);
+int			check_infile(char *file);
+void		apply_exec_first_bonus_2(char *path, char **cmd, char **env);
 #endif

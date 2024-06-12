@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:09:47 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 14:53:26 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:38:23 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@ int	exec_first(char *av, char **env, char *file)
 	int		id;
 	int		pip[2];
 
+
 	if (pipe(pip) == -1)
-		perror("pip error");
+		perror("");
 	id = fork();
 	if (id == -1)
-		perror("fork error");
+		perror("");
 	if (id == 0)
 	{
 		infile = open(file, O_RDONLY);
-		if (infile == -1)
-			perror("infile error");
+		if (check_infile(file) == 0)
+		{
+			close(pip[1]);
+			close(pip[0]);
+			exit (-1);
+		}	
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		apply_exec_first_bonus(infile, pip);
-		if (execve(path, cmd, env) == -1)
-			perror("exec error 1");
+		apply_exec_first_bonus_2(path, cmd, env);
 	}
 	close(pip[1]);
 	return (pip[0]);
@@ -51,7 +55,7 @@ int	exec_midle(char *av, char **env, int fd)
 		exit(EXIT_FAILURE);
 	id = fork();
 	if (id == -1)
-		perror("fork error");
+		perror("");
 	if (id == 0)
 	{
 		close(pip[0]);
@@ -59,7 +63,7 @@ int	exec_midle(char *av, char **env, int fd)
 		cmd = find_cmd(av);
 		apply_exec_middle_bonus(fd, pip);
 		if (execve(path, cmd, env) == -1)
-			perror("exec error");
+			perror("");
 	}
 	close(pip[1]);
 	close(fd);
@@ -75,17 +79,17 @@ void	exec_last(char *av, char **env, char *file, int fd)
 
 	id = fork();
 	if (id == -1)
-		perror("id error");
+		perror("");
 	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (outfile == -1)
-		perror("outfile error");
+		perror("");
 	if (id == 0)
 	{
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		apply_exec_last_bonus(fd, outfile);
 		if (execve(path, cmd, env) == -1)
-			perror("exec error");
+			perror("");
 	}
 	close(outfile);
 	close(fd);

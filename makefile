@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/06/12 15:03:34 by aroualid         ###   ########.fr        #
+#    Updated: 2024/06/12 16:33:55 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) $(OBJS)
-
+	$(RM) $(OBJS_BNS)
 fclean: clean
 	$(RM) $(NAME)
-
+	$(RM) $(NAME_BONUS)
 re: fclean all
 
 bonus: $(OBJS_BNS)

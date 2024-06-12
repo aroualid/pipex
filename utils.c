@@ -6,11 +6,24 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:38:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 15:19:32 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:34:18 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int check_infile(char *file)
+{
+	int		infile;
+
+	infile = open(file, O_RDONLY);
+	if (infile == -1)
+	{
+		perror(file);
+		return (infile);
+	}
+	return (infile);
+}
 
 char	*ft_strchr(const char *s, int c)
 {

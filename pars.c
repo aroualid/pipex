@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 16:28:20 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:06:49 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ char	**get_folders_from_path(char **env)
 
 	i = 0;
 	folders = NULL;
-	while (env[i])
+	if (env)
 	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
+		while (env[i])
 		{
-			folders = ft_split(env[i] + 5, ':');
-			break ;
+			if (ft_strncmp(env[i], "PATH", 4) == 0)
+				{
+					folders = ft_split(env[i] + 5, ':');
+					break ;
+				}
+			i++;
 		}
-		i++;
 	}
 	return (folders);
 }
@@ -48,6 +51,12 @@ char	*find_path_in_folders(char **folders, char *av)
 	while (folders[j])
 	{
 		path = ft_strjoin(folders[j], endfile);
+		if (path == NULL) 
+		{
+            ft_free(cmd);
+            free(endfile);
+            return (NULL);
+        }
 		if (access(path, F_OK | X_OK) == 0)
 			return (return_path (cmd, endfile, path));
 		free(path);
@@ -68,7 +77,11 @@ char	*path_ok(char *av)
 		return (NULL);
 	path = *cmd;
 	if (access(path, F_OK | X_OK) == 0)
-		return(path);
+	{
+        ft_free(cmd);
+        return (path);
+    }
+	ft_free(cmd);
 	return(NULL);
 }
 
@@ -82,7 +95,9 @@ char	*find_path(char **env, char *av)
 		folders = get_folders_from_path(env);
 		if (folders == NULL)
 		{
-			write(1, "PATH environment variable not found\n", 36);
+			write(1, "command not found : ", 21);
+			write(1, av, ft_strlen(av));
+			write(1, "\n", 1);
 			return (NULL);
 		}
 		path = find_path_in_folders(folders, av);
@@ -92,6 +107,7 @@ char	*find_path(char **env, char *av)
 			write(1, "command not found : ", 21);
 			write(1, av, ft_strlen(av));
 			write(1, "\n", 1);
+			return (NULL);
 		}
 		return (path);
 	}
