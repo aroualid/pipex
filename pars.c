@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:54:50 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 18:06:49 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:08:26 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ char	**get_folders_from_path(char **env)
 
 	i = 0;
 	folders = NULL;
-	if (env)
+	while (env[i])
 	{
-		while (env[i])
+		if (ft_strncmp(env[i], "PATH", 4) == 0)
 		{
-			if (ft_strncmp(env[i], "PATH", 4) == 0)
-				{
-					folders = ft_split(env[i] + 5, ':');
-					break ;
-				}
-			i++;
+			folders = ft_split(env[i] + 5, ':');
+			break ;
 		}
+		i++;
 	}
 	return (folders);
 }
@@ -51,20 +48,14 @@ char	*find_path_in_folders(char **folders, char *av)
 	while (folders[j])
 	{
 		path = ft_strjoin(folders[j], endfile);
-		if (path == NULL) 
-		{
-            ft_free(cmd);
-            free(endfile);
-            return (NULL);
-        }
+		if (path == NULL)
+			return (free_return(cmd, endfile));
 		if (access(path, F_OK | X_OK) == 0)
 			return (return_path (cmd, endfile, path));
 		free(path);
 		j++;
 	}
-	ft_free(cmd);
-	free(endfile);
-	return (NULL);
+	return (free_return(cmd, endfile));
 }
 
 char	*path_ok(char *av)
@@ -78,11 +69,10 @@ char	*path_ok(char *av)
 	path = *cmd;
 	if (access(path, F_OK | X_OK) == 0)
 	{
-        ft_free(cmd);
-        return (path);
-    }
+		return (path);
+	}
 	ft_free(cmd);
-	return(NULL);
+	return (NULL);
 }
 
 char	*find_path(char **env, char *av)

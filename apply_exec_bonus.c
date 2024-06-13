@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:51:02 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/13 12:02:39 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:53:48 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2])
 	char	*path;
 	char	**cmd;
 	int		infile;
-	
+
 	infile = open(file, O_RDONLY);
 	if (infile == -1)
 		perror("");
@@ -42,6 +42,7 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av)
 {
 	char	*path;
 	char	**cmd;
+
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("");
 	if (dup2(pip[1], STDOUT_FILENO) == -1)
@@ -61,15 +62,11 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av)
 	free(path);
 }
 
-void	apply_exec_last_bns(char *av, char **env, char *file, int fd)
+void	apply_exec_last_bns(char *av, char **env, int outfile, int fd)
 {
 	char	*path;
 	char	**cmd;
-	int		outfile;
 
-	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (outfile == -1)
-		perror("");
 	path = find_path(env, av);
 	cmd = find_cmd(av);
 	if (dup2(fd, STDIN_FILENO) == -1)

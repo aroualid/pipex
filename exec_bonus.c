@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:09:47 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/13 12:02:34 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:22:43 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,14 @@ int	exec_first(char *av, char **env, char *file)
 	{
 		infile = check_infile(file);
 		if (infile == -1)
-		{
-			close(pip[1]);
-			close(pip[0]);
-			exit (-1);
-		}
+			exit_close(pip);
 		close(infile);
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_first_bns(av, env, file, pip);
-		ft_free(cmd);
-		free(path);
-		close(pip[1]);
-		close(pip[0]);
-		exit (-1);
+		free_all(path, cmd);
+		exit_close(pip);
 	}
 	return (close(pip[1]), pip[0]);
 }
@@ -67,8 +60,7 @@ int	exec_midle(char *av, char **env, int fd)
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_middle_bonus(fd, pip, env, av);
-		ft_free(cmd);
-		free(path);
+		free_all(path, cmd);
 		close (fd);
 		close (pip[1]);
 		exit (-1);
@@ -83,7 +75,11 @@ void	exec_last(char *av, char **env, char *file, int fd)
 	int		id;
 	char	*path;
 	char	**cmd;
+	int		outfile;
 
+	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (outfile == -1)
+		perror("");
 	id = fork();
 	if (id == -1)
 		perror("");
@@ -92,13 +88,15 @@ void	exec_last(char *av, char **env, char *file, int fd)
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
-			apply_exec_last_bns(av, env, file, fd);
+			apply_exec_last_bns(av, env, outfile, fd);
+		close (outfile);
 		ft_free(cmd);
 		free(path);
 		close (fd);
 		exit (-1);
 	}
 	close (fd);
+	close (outfile);
 }
 
 int	main(int ac, char **av, char **env)

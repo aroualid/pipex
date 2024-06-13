@@ -6,12 +6,11 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 09:34:36 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 18:37:16 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:40:40 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
 
 int	exec_first(char *av, char **env, char *file)
 {
@@ -30,21 +29,14 @@ int	exec_first(char *av, char **env, char *file)
 	{
 		infile = check_infile(file);
 		if (infile == -1)
-		{
-			close(pip[1]);
-			close(pip[0]);
-			exit (-1);
-		}
+			exit_close(pip);
 		close(infile);
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_first(av, env, file, pip);
-		ft_free(cmd);
-		free(path);
-		close(pip[1]);
-		close(pip[0]);
-		exit (-1);
+		free_all(path, cmd);
+		exit_close(pip);
 	}
 	return (close(pip[1]), pip[0]);
 }
@@ -54,7 +46,7 @@ void	apply_exec_first(char *av, char **env, char *file, int pip[2])
 	char	*path;
 	char	**cmd;
 	int		infile;
-	
+
 	infile = open(file, O_RDONLY);
 	if (infile == -1)
 		perror("");
@@ -67,7 +59,6 @@ void	apply_exec_first(char *av, char **env, char *file, int pip[2])
 	ft_close(pip, infile);
 	if (execve(path, cmd, env) == -1)
 	{
-		close (infile);
 		free (path);
 		ft_free (cmd);
 		exit(-1);
@@ -81,7 +72,11 @@ void	exec_last(char *av, char **env, char *file, int fd)
 	int		id;
 	char	*path;
 	char	**cmd;
+	int		outfile;
 
+	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (outfile == -1)
+		perror("");
 	id = fork();
 	if (id == -1)
 		perror("");
@@ -90,29 +85,22 @@ void	exec_last(char *av, char **env, char *file, int fd)
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
-		{
-			apply_exec_last(av, env, file, fd);
-		}
-		else
-		{
-			ft_free(cmd);
-			free(path);
-			close (fd);
-			exit (-1);
-		}
+			apply_exec_last(av, env, outfile, fd);
+		close (outfile);
+		ft_free(cmd);
+		free(path);
+		close (fd);
+		exit (-1);
 	}
 	close (fd);
+	close (outfile);
 }
 
-void	apply_exec_last(char *av, char **env, char *file, int fd)
+void	apply_exec_last(char *av, char **env, int outfile, int fd)
 {
 	char	*path;
 	char	**cmd;
-	int		outfile;
 
-	outfile = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (outfile == -1)
-		perror("");
 	path = find_path(env, av);
 	cmd = find_cmd(av);
 	if (dup2(fd, STDIN_FILENO) == -1)

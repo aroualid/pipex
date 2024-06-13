@@ -6,13 +6,13 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:38:21 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 18:34:18 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:30:17 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int check_infile(char *file)
+int	check_infile(char *file)
 {
 	int		infile;
 

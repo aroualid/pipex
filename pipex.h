@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/13 11:58:33 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:24:55 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ void		exec_last(char *av, char **env, char *file, int fd);
 void		ft_free(char **tav);
 void		ft_close(int pip[2], int infile);
 void		apply_exec_first(char *av, char **env, char *file, int pip[2]);
-void		apply_exec_last(char *av, char **env, char *file, int fd);
+void		apply_exec_last(char *av, char **env, int outfile, int fd);
 char		*return_path(char **cmd, char *endfile, char *path);
 void		apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
 void		apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
-void		apply_exec_last_bns(char *av, char **env, char *file, int fd);
+void		apply_exec_last_bns(char *av, char **env, int outfile, int fd);
 char		*ft_strchr(const char *s, int c);
 int			check_infile(char *file);
+int			exit_close(int pip[2]);
+char		*free_return(char **cmd, char *endfile);
+void		free_all(char *path, char **cmd);
 #endif

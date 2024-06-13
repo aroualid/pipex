@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/06/12 16:33:55 by aroualid         ###   ########.fr        #
+#    Updated: 2024/06/13 14:30:42 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ LIGHT_PURPLE=\033[1;35m
 CC = cc
 CFLAGS=  -Wall -Wextra -Werror  -g3
 SRCS = ft_calloc.c ft_strjoin.c ft_strncmp.c pars.c \
-	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec.c
+	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec.c utils2.c
 BNS =  ft_calloc.c ft_strjoin.c ft_strncmp.c pars.c \
 	   ft_bzero.c ft_split.c ft_strlen.c utils.c exec_bonus.c \
-	   apply_exec_bonus.c
+	   apply_exec_bonus.c utils2.c
 OBJS = $(SRCS:%.c=%.o)
 OBJS_BNS = $(BNS:%.c=%.o)
 NAME = pipex
