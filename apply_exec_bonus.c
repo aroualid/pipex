@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:51:02 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 18:59:44 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:02:39 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2])
 	ft_close(pip, infile);
 	if (execve(path, cmd, env) == -1)
 	{
-		close (infile);
 		free (path);
 		ft_free (cmd);
 		exit(-1);
@@ -39,14 +38,27 @@ void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2])
 	ft_free (cmd);
 }
 
-void	apply_exec_middle_bonus(int fd, int pip[2])
+void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av)
 {
+	char	*path;
+	char	**cmd;
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("");
 	if (dup2(pip[1], STDOUT_FILENO) == -1)
 		perror("");
 	close(fd);
 	close(pip[1]);
+	path = find_path(env, av);
+	cmd = find_cmd(av);
+	if (execve(path, cmd, env) == -1)
+	{
+		close (pip[0]);
+		free (path);
+		ft_free (cmd);
+		exit(-1);
+	}
+	ft_free(cmd);
+	free(path);
 }
 
 void	apply_exec_last_bns(char *av, char **env, char *file, int fd)

@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:09:47 by aroualid          #+#    #+#             */
-/*   Updated: 2024/06/12 19:00:03 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:02:34 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,13 @@ int	exec_midle(char *av, char **env, int fd)
 		close(pip[0]);
 		path = find_path(env, av);
 		cmd = find_cmd(av);
-		apply_exec_middle_bonus(fd, pip);
-		if (execve(path, cmd, env) == -1)
-			perror("");
+		if (path != NULL && cmd != NULL)
+			apply_exec_middle_bonus(fd, pip, env, av);
+		ft_free(cmd);
+		free(path);
+		close (fd);
+		close (pip[1]);
+		exit (-1);
 	}
 	close(pip[1]);
 	close(fd);
@@ -89,13 +93,10 @@ void	exec_last(char *av, char **env, char *file, int fd)
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_last_bns(av, env, file, fd);
-		else
-		{
-			ft_free(cmd);
-			free(path);
-			close (fd);
-			exit (-1);
-		}
+		ft_free(cmd);
+		free(path);
+		close (fd);
+		exit (-1);
 	}
 	close (fd);
 }
