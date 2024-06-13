@@ -6,7 +6,7 @@
 #    By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 15:56:31 by aroualid          #+#    #+#              #
-#    Updated: 2024/06/13 14:30:42 by aroualid         ###   ########.fr        #
+#    Updated: 2024/06/13 16:30:45 by aroualid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,13 @@ NAME_BONUS = pipex_bonus
 .PHONY: all clean fclean re bonus
 
 all:  $(NAME) 
+bonus : $(NAME_BONUS)
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) 
+
+$(NAME_BONUS): $(OBJS_BNS)
+	$(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BNS)
 
 clean:
 	$(RM) $(OBJS)
@@ -48,5 +52,4 @@ fclean: clean
 	$(RM) $(NAME_BONUS)
 re: fclean all
 
-bonus: $(OBJS_BNS)
-	$(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BNS)
+
